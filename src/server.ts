@@ -1,5 +1,7 @@
 import Twitter from 'twitter'
-import 'dotenv/config'
+import env from 'dotenv'
+
+env.config()
 
 const tweet = new Twitter({
   consumer_key:         process.env.BOT_CONSUMER_KEY,
@@ -8,14 +10,14 @@ const tweet = new Twitter({
   access_token_secret:  process.env.BOT_ACESS_TOKEN_SECRET,
 })
 
-function action(event){
+function retweet(event){
   const {retweeted_status, id_str, screen_name, is_quote_status} = event;
   const {name} = event.user;
 
   if(!retweeted_status && !is_quote_status){ 
-    tweet.post(`statuses/retweet/${id_str}`, erro => { 
-      if(erro){
-        console.log("Erro no retweet: " + erro)
+    tweet.post(`statuses/retweet/${id_str}`, err => { 
+      if(err){
+        console.log("Erro no retweet: " + err)
       }else {
         console.log("RETWEETADO: ", `https://twitter.com/${name}/status/${id_str}`)
       }
@@ -26,8 +28,8 @@ function action(event){
 
 }
 
-const stream = tweet.stream('statuses/filter', {track: 'egirl'}) 
+var stream = tweet.stream('statuses/filter', {track: 'egirl'}) 
 
-stream.on('data', action) 
-stream.on('error', erro => console.log("Erro: "+ erro)) 
+stream.on('data', retweet) 
+stream.on('error', err => console.log("Erro: "+ err)) 
 
