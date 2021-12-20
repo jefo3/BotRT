@@ -9,8 +9,8 @@ dotenv_1.default.config();
 const tweet = new twitter_1.default({
     consumer_key: process.env.BOT_CONSUMER_KEY,
     consumer_secret: process.env.BOT_CONSUMER_SECRET,
-    access_token_key: process.env.BOT_ACESS_TOKEN,
-    access_token_secret: process.env.BOT_ACESS_TOKEN_SECRET,
+    access_token_key: process.env.BOT_ACCESS_TOKEN,
+    access_token_secret: process.env.BOT_ACCESS_TOKEN_SECRET,
 });
 function retweet(event) {
     const { retweeted_status, id_str, screen_name, is_quote_status } = event;
