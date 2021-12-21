@@ -7,4 +7,4 @@ const twitterConnection_1 = require("./connection/twitterConnection");
 const twitterController_1 = __importDefault(require("./controllers/twitterController"));
 const stream = twitterConnection_1.tweet.stream('statuses/filter', { track: 'egirl' });
 stream.on('data', twitterController_1.default.retweet);
-stream.on('error', err => console.log("Erro: " + err));
+stream.on('error', err => console.log('Erro: ' + err));

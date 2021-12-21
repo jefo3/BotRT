@@ -7,20 +7,28 @@ function retweet(event) {
     if (!retweeted_status && !is_quote_status) {
         twitterConnection_1.tweet.post(`statuses/retweet/${id_str}`, err => {
             if (err) {
-                console.log("Erro no retweet: " + err);
+                console.log('Erro no retweet: ' + err);
             }
             else {
-                console.log("RETWEETADO: ", `https://twitter.com/${name}/status/${id_str}`);
+                console.log('RETWEETADO: ', `https://twitter.com/${name}/status/${id_str}`);
             }
         });
+        like(id_str, name);
     }
     else {
         return;
     }
 }
-function like() {
-    return 0;
+function like(id_str, name) {
+    twitterConnection_1.tweet.post('favorites/create', { id: id_str }, err => {
+        if (err) {
+            console.log('Erro no like: ' + err);
+        }
+        else {
+            console.log('LIKE IN: ', `https://twitter.com/${name}/status/${id_str}`);
+        }
+    });
 }
 exports.default = {
-    retweet, like
+    retweet,
 };
