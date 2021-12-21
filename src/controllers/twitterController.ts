@@ -24,7 +24,7 @@ function retweet(event) {
 }
 
 function like(id_str, name) {
-  tweet.post('favorites/create', id_str, err => {
+  tweet.post('favorites/create', {id: id_str}, err => {
     if (err) {
       console.log('Erro no like: ' + err);
     } else {
