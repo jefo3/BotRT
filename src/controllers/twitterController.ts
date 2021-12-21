@@ -15,16 +15,27 @@ function retweet(event) {
         );
       }
     });
+
+    like(id_str, name)
+
   } else {
     return;
   }
 }
 
-function like() {
-  return 0;
+function like(id_str, name) {
+  tweet.post('favorites/create', {id: id_str}, err => {
+    if (err) {
+      console.log('Erro no like: ' + err);
+    } else {
+      console.log(
+        'LIKE IN: ',
+        `https://twitter.com/${name}/status/${id_str}`,
+      );
+    }
+  });
 }
 
 export default {
   retweet,
-  like,
 };
