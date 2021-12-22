@@ -1,10 +1,16 @@
 import { tweet } from '../connection/twitterConnection';
+import BlockedWords from '../services/BlockedWords'
 
 function retweet(event) {
-  const { retweeted_status, id_str, screen_name, is_quote_status } = event;
+  const { retweeted_status, id_str, is_quote_status,text} = event;
   const { name } = event.user;
 
   if (!retweeted_status && !is_quote_status) {
+
+    const res = BlockedWords.evaluate(text)
+
+    if(res) return
+
     tweet.post(`statuses/retweet/${id_str}`, err => {
       if (err) {
         console.log('Erro no retweet: ' + err);
