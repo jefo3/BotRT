@@ -7,9 +7,9 @@ function retweet(event) {
 
   if (!retweeted_status && !is_quote_status) {
 
-    const res = BlockedWords.evaluate(text)
+    const containBlockeWord = BlockedWords.evaluate(text)
 
-    if(res) return
+    if(containBlockeWord) return
 
     tweet.post(`statuses/retweet/${id_str}`, err => {
       if (err) {
