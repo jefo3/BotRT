@@ -1,10 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const twitterConnection_1 = require("../connection/twitterConnection");
+const BlockedWords_1 = __importDefault(require("../services/BlockedWords"));
 function retweet(event) {
-    const { retweeted_status, id_str, screen_name, is_quote_status } = event;
+    const { retweeted_status, id_str, is_quote_status, text } = event;
     const { name } = event.user;
     if (!retweeted_status && !is_quote_status) {
+        const res = BlockedWords_1.default.evaluate(text);
+        if (res)
+            return;
         twitterConnection_1.tweet.post(`statuses/retweet/${id_str}`, err => {
             if (err) {
                 console.log('Erro no retweet: ' + err);
